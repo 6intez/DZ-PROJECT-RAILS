@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><%= t("navigation.home") %> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/appointment1/index"><%= t("navigation.makeup")%></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/static_pages/about"><%= t("navigation.about")%></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <% if current_user %>
+          <li class="nav-item"> <%= link_to t("navigation.my_acc"), my_account_view_path, class: "nav-link" %></li>
+          <li class="nav-item"> <%= button_to t("navigation.sign_out"), destroy_user_session_path, method: :delete, class: "btn btn-small btn-primary mx-2" %></li>
+        <%elsif current_admin%>
+          <li class="nav-item"> <%= button_to t("navigation.sign_out"), destroy_admin_session_path, method: :delete, class: "btn btn-small btn-primary mx-2" %></li>
+          <li class="nav-item"> <%= link_to t("navigation.admin_panel"), admin_input_path, class: "nav-link" %></li>
+        <% else %>
+          <li class="nav-item"> <%= link_to t("navigation.sign_up"), new_user_registration_path, class: "nav-link"  %></li>
+          <li class="nav-item"> <%= link_to t("navigation.sign_in"), new_user_session_path, class: "nav-link"  %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div><%= link_to "English ", url_for(locale: "en") %>
+      <%= link_to "Русский", url_for(locale: "ru") %></div>
+
+
+
+    <!--          <div class = "centered-div">-->
+<!--            <h1 style="font-family: 'Roboto', sans-serif;"> Estethic </h1>-->
+<!--          </div>-->
+  </div>
+</nav>

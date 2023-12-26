@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title><%=t("home.home_title")%></title>
+  <style>
+
+  </style>
+</head>
+<body>
+<div id="service" class="service">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ourheading">
+          <h2><%=t("home.service_out")%> <strong class="white_ll"><%= t("home.service_service")%></strong></h2>
+          <span> nothing to say </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="pricing">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ourheading">
+          <h2><%=t("home.price_heading")%><strong class="white"> <%=t("home.price_price")%></strong></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mar_bottom">
+        <div class="pricing_img">
+          <figure><img src="https://i.ibb.co/h9Gb6v3/vvv.png" alt="slay" />
+          </figure>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 pad_left">
+        <div class="pricing_box">
+          <div class="list">
+            <ul>
+              <li><span class="float-left"><%=t("home.haircut")%></span><span class="float-right">$ <%=Price.find_by(name:"Стрижка").price%></span></li>
+              <li><span class="float-left"><%=t("home.fade")%></span><span class="float-right">$ <%=Price.find_by(name:"Fade").price%></span></li>
+              <li><span class="float-left"><%=t("home.buzz_cut")%></span><span class="float-right">$ <%=Price.find_by(name:"Buzz Cut").price%></span></li>
+              <li><span class="float-left"><%=t("home.classic")%></span><span class="float-right">$ <%=Price.find_by(name:"Классическая").price%></span></li>
+            </ul>
+            <ul>
+              <li><span class="float-left"><%=t("home.crop")%></span><span class="float-right">$ <%=Price.find_by(name:"Кроп").price%></span></li>
+              <li><span class="float-left"><%=t("home.mustache_trim")%></span><span class="float-right">$ <%=Price.find_by(name:"Стрижка усов").price%></span></li>
+              <li><span class="float-left"><%=t("home.beard_trim")%></span><span class="float-right">$ <%=Price.find_by(name:"Стрижка бороды").price%></span></li>
+              <li><span class="float-left"><%=t("home.coloring")%></span><span class="float-right">$ <%=Price.find_by(name:"Окрашивание").price%></span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="opening">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="ourheading">
+              <h2><%=t("home.work_hours")%><strong class="white"> <%=t("home.work_work")%></strong></h2>
+            </div>
+          </div>
+        </div>
+        <div class="opening_bg">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+              <div class="times">
+                <ul>
+                  <li><span><%=t("home.monday")%></span><span class="float-right">9:00      <strong class="bbbb">21:00</strong></span></li>
+                  <li><span><%=t("home.tuesday")%> </span><span class="float-right">9:00      <strong class="bbbb">21:00</strong></span></li>
+                  <li><span><%=t("home.wednesday")%></span><span class="float-right">9:00      <strong class="bbbb">21:00</strong></span></li>
+
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+              <div class="times">
+                <ul>
+                  <li><span><%=t("home.thursday")%></span><span class="float-right"> 9:00      <strong class="bbbb">21:00</strong></span></li>
+                  <li><span><%=t("home.friday")%></span><span class="float-right">9:00    <strong class="bbbb">21:00</strong></span></li>
+                  <li><span><%=t("home.saturday")%></span><span class="float-right">9:00   <strong class="bbbb">19:00</strong></span></li>
+                  <li><span><%=t("home.sunday")%></span><span class="float-right"><%=t("home.not_work")%></span> </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+

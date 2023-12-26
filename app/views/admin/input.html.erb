@@ -1,0 +1,20 @@
+<%if current_admin  %>
+<h1>Users</h1>
+<ul>
+  <% @master.each do |user| %>
+    <li><%= user.email %></li>
+  <% end %>
+</ul>
+
+
+<h1>Appointments</h1>
+<ul>
+  <% @zap.each do |ap| %>
+    <li><%= ap.date %></li>
+    <p><%=ap.email %></p>
+  <% end %>
+</ul>
+  <%else%>
+  <p>Oops</p>
+<%end %>
+

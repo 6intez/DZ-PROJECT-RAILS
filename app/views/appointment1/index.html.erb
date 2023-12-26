@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Other Page</title>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag 'application' %>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div id="chooseMaster">
+  <h1><%=t("appointments.chooser") %></h1>
+<select id="MasterDropdown">
+  <option value=""></option>
+</select>
+  <button id="nextButton"><%=t("appointments.next_b") %></button>
+
+</div>
+<div id="chooseDate">
+  <h2><%=t("appointments.choose_data") %></h2>
+<select id="availabilitiesDropdown" style="display: none;">
+  <option value=""></option>
+</select>
+  <button id="nextButton2"><%=t("appointments.next_b") %></button>
+</div>
+<div id="appointmentForm" style="display: none;">
+  <h2><%=t("appointments.form_for") %></h2>
+  <% if current_user %>
+  <input type="text" id="inputName"  placeholder="<%=t("appointments.input_name") %>"  required >
+  <br>
+  <input type="text" id="inputPhoneNumber" placeholder="<%=t("appointments.input_email") %>" value="<%=current_user.email%>" required>
+  <br><% else %>
+    <input type="text" id="inputName"  placeholder="<%=t("appointments.input_name") %>" required >
+    <br>
+    <input type="text" id="inputPhoneNumber" placeholder="<%=t("appointments.input_email") %>" required>
+    <%end %>
+  <button id="submitAppointment"><%=t("appointments.btn_zap") %></button>
+
+</div>
+
+<div id="successMessage"></div>
+
+<script>
+    $(document).ready(function() {
+        $('#chooseDate').hide();
+        $.ajax({
+            url: "<%= url_for(controller: 'masters', action: 'available_times') %>",
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                $('#MasterDropdown').empty();
+                data.forEach(function(name) {
+                    $('#MasterDropdown').append('<option value="' + name + '">' + name + '</option>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log("Error fetching appointments: ", error);
+            }
+        });
+    });
+</script>
+<script>
+    document.getElementById("nextButton2").addEventListener("click", function() {
+        document.getElementById("availabilitiesDropdown").disabled = true;
+    });
+    document.getElementById("nextButton").addEventListener("click", function() {
+        document.getElementById("MasterDropdown").disabled = true;
+    });
+
+    $(document).ready(function() {
+        $('#nextButton').click(function () {
+            var name = $('#MasterDropdown').val();
+            if (name) { // Проверяем, выбран ли мастер
+                $.ajax({
+                    url: "<%= url_for(controller: 'availabilities', action: 'index') %>?name=" + name,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#availabilitiesDropdown').empty();
+                        if (data.length > 0) {
+                            data.forEach(function (date) {
+                                $('#availabilitiesDropdown').append('<option value="' + date + '">' + date + '</option>');
+                            });
+                        } else {
+                            $('#availabilitiesDropdown').append('<option value="">Нет доступных дат и времени</option>');
+                            $('#nextButton2').hide();
+                        }
+                        $('#nextButton').hide();
+                        $('#chooseDate').show();
+                        $('#availabilitiesDropdown').show();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error fetching availabilities: ", error);
+                    }
+                });
+            } else {
+                alert('Выберите мастера перед нажатием "Далее"');
+            }
+        });
+        $('#nextButton2').click(function () { //
+            var date = $('#availabilitiesDropdown').val();
+            if (date) { //
+                $('#nextButton2').hide(); //
+                $('#appointmentForm').show(); //
+            } else {
+                alert('Выберите дату перед нажатием "Далее"');
+            }
+        });
+
+            $('#submitAppointment').click(function () {
+                var name = $('#inputName').val();
+                var phoneNumber = $('#inputPhoneNumber').val();
+                var date = $('#availabilitiesDropdown').val();
+                var master_name = $('#MasterDropdown').val();
+                var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+                if (emailRegex.test(phoneNumber)){
+                    if ((name === '') || (phoneNumber === '')) {
+                        alert('Пожалуйста, проверьте правильность заполнения полей');
+                    } else {
+                        document.getElementById("submitAppointment").addEventListener("click", function () {
+                            document.getElementById("inputName").disabled = true;
+                        });
+                        document.getElementById("submitAppointment").addEventListener("click", function () {
+                            document.getElementById("inputPhoneNumber").disabled = true;
+                        });
+
+
+                        $.ajax({
+                            url: "<%= url_for(controller: 'appointment1', action: 'view') %>",
+                            data: {name: name, phoneNumber: phoneNumber, date: date, master_name: master_name},
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function (response) {
+
+                                $('#successMessage').text('Вы успешно записаны к мастеру ' + master_name + " на " + date);
+                                $('#submitAppointment').hide();
+
+
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("Error creating appointment1: ", error);
+                                $('#successMessage').text('Ошибка` ' + error);
+                            }
+                        });
+                    }
+                }
+                else{alert("Please enter a valid email address");
+                }
+            });
+
+    });
+
+
+</script>
+
+</body>
+</html>
+

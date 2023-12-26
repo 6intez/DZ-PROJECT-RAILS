@@ -1,0 +1,55 @@
+<%if current_user %>
+
+  <p><%=t("my_account.your_acc") %>: <%=@email %></p>
+  <ul>
+    <li class="nav-item"> <%= link_to t("navigation.edit_account"), edit_user_registration_path, class: "nav-link" %></li>
+  </ul>
+  <p><%=t("my_account.history")%></p>
+  <ul>
+    <% @history_zap.each do |ap| %>
+      <li>
+        <%= ap.date %> - <%= ap.master_name %>
+        <button onclick="destroyAppointment('<%= ap.email %>', '<%= ap.date %>')"><%=t("my_account.del") %></button>
+      </li>
+    <% end %>
+  </ul>
+
+
+  <div id="result">
+  </div>
+
+<%else %> <p>You r not logged</p>
+<%end %>
+
+<script>
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    function destroyAppointment(email, date) {
+        // Отправляем AJAX-запрос на сервер для удаления записи
+        fetch('/availabilities/destroy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': token  // Включаем CSRF-токен в заголовок запроса
+            },
+            body: JSON.stringify({
+                email: email,
+                date: date
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response === "Success") {
+                    // Обновляем страницу или выполняем необходимые действия для подтверждения успешного удаления
+                    location.reload();
+                    alert("<%=t("my_account.al_suc") %>");
+
+                } else {
+                    alert("Failed to delete appointment");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+</script>

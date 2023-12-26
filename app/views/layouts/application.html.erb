@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SalonBeta2</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+  </head>
+
+  <body>
+  <%= render 'layouts/navbar' %>
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+      <%= flash[:notice] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+      <%= flash[:alert] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="container-fluid">
+    <%= yield %>
+  </div>
+<!--  <div class="custom-heading">-->
+
+<!--    <div class="btn-group">-->
+
+<!--      <a href="<%#= root_path %>" class="btn btn-primary">главная</a>-->
+
+
+<!--      <a href="<%#= static_pages_about_path %>" class="btn btn-secondary">О нас</a>-->
+
+
+<!--      <a href="<%#= url_for(controller: 'appointment1', action: 'index') %>" class="btn btn-secondary">Записаться в салон</a>-->
+<!--      <div class = "centered-div">-->
+<!--        <h1 class="custom-heading"> Estethic </h1>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class = "centered-div">-->
+<!--      <h1 class="custom-heading"> Estethic </h1>-->
+<!--    </div>-->
+<!--  </div>-->
+  </body>
+</html>
